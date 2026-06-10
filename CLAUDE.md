@@ -23,3 +23,9 @@ https://github.com/kashuba-QA/Prompt-quality-judge.git
 | `amplify.yml` | AWS Amplify build config |
 | `Draft/` | Draft versions of the UI |
 | `LAMBDA_SETUP.md` | Step-by-step guide for setting up the AWS Lambda proxy |
+
+## Test accounts
+
+| Role | Email | Password |
+|---|---|---|
+| LLM Judge | judgetest@net.com | 12345678Qq |
