@@ -719,24 +719,7 @@ async function doLogin() {
   const base = document.getElementById('apiBase').value.trim();
   log('logging in...');
 
-  // Login admin account (hardcoded)
-  try {
-    const adminEmail = 'tutboss@net.com';
-    const adminPass = 'Xz9\u003fpT\u0021mR4v2\u0026Kw7LbQf888';
-    const r = await fetch(`${base}/api/Authenticate/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: adminEmail, password: adminPass })
-    });
-    const d = await r.json();
-    if (!r.ok || !d.accessToken) throw new Error(d.message || 'admin login failed');
-    adminToken = d.accessToken;
-    log(`admin logged in ✓`, 'ok');
-  } catch(e) {
-    setStatus('err');
-    log(`admin login error: ${e.message}`, 'err');
-    return;
-  }
+  // Admin auth handled by Lambda — no admin credentials on frontend
 
   // Login test user account
   try {
