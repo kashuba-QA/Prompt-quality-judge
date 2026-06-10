@@ -662,6 +662,7 @@ Rules:
 <script>
 // ── STATE ──────────────────────────────────────────────────────────────
 let accessToken = null;
+const LAMBDA_URL = 'https://snvc23otupykya2oolcmzzsvpi0omlqj.lambda-url.us-east-1.on.aws';
 
 // ── CONFIG LOADER ───────────────────────────────────────────────────────
 function loadConfig() {
@@ -804,11 +805,10 @@ async function setPrompt() {
   if (!uid) { log('userId missing', 'err'); return; }
   log('setting prompt override...');
   try {
-    const r = await fetch(`${base}/api/Admin/admin-set-prompt-to-chat-with-model`, {
+    const r = await fetch(`${LAMBDA_URL}/api/Admin/admin-set-prompt-to-chat-with-model`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${adminToken || accessToken}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ userId: uid, promptOverride: prompt })
     });
@@ -844,8 +844,8 @@ async function fetchCurrentPrompt() {
   const base = document.getElementById('apiBase').value.trim();
   const uid = document.getElementById('userId').value.trim();
   try {
-    const r = await fetch(`${base}/api/Admin/admin-get-prompt-to-chat-with-model?userId=${uid}`, {
-      headers: { 'Authorization': `Bearer ${adminToken || accessToken}` }
+    const r = await fetch(`${LAMBDA_URL}/api/Admin/admin-get-prompt-to-chat-with-model?userId=${uid}`, {
+      headers: { 'Content-Type': 'application/json' }
     });
     const d = await r.json();
     const field = document.getElementById('currentPromptField');
@@ -1018,8 +1018,8 @@ async function runDialog() {
     await sleep(delay);
     let lastModelMsg = '';
     try {
-      const r = await fetch(`${base}/api/Chats/admin-get-messages/${chatId}`, {
-        headers: { 'Authorization': `Bearer ${adminToken || accessToken}` }
+      const r = await fetch(`${LAMBDA_URL}/api/Chats/admin-get-messages/${chatId}`, {
+        headers: { 'Content-Type': 'application/json' }
       });
       const d = await r.json();
       const msgs = (d.messages || d);
@@ -1092,8 +1092,8 @@ async function fetchDialog() {
   const chatId = document.getElementById('chatId').value.trim();
   if (!chatId) { log('chat_id missing', 'err'); return; }
   try {
-    const r = await fetch(`${base}/api/Chats/admin-get-messages/${chatId}`, {
-      headers: { 'Authorization': `Bearer ${adminToken || accessToken}` }
+    const r = await fetch(`${LAMBDA_URL}/api/Chats/admin-get-messages/${chatId}`, {
+      headers: { 'Content-Type': 'application/json' }
     });
     const d = await r.json();
     const msgs = d.messages || d;
