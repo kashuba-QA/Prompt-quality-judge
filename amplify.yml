@@ -3,16 +3,7 @@ frontend:
   phases:
     build:
       commands:
-        - |
-          cat > config.js << CONFIGEOF
-          const CONFIG = {
-            companionProvider: '${COMPANION_PROVIDER}',
-            companionOpenaiKey: '${COMPANION_OPENAI_KEY}',
-            companionProviderKey: '${COMPANION_PROVIDER_KEY}',
-            judgeOpenaiKey: '${JUDGE_OPENAI_KEY}',
-            judgeGeminiKey: '${JUDGE_GEMINI_KEY}',
-          };
-          CONFIGEOF
+        - echo "const CONFIG = {};" > config.js
   artifacts:
     baseDirectory: /
     files:

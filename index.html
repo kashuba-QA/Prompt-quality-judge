@@ -881,9 +881,9 @@ async function callCompanionLLM(sysPrompt, history, userMsg) {
   if (userMsg) messages.push({ role: 'user', content: userMsg });
 
   if (provider === 'openai') {
-    const r = await fetch('https://api.openai.com/v1/chat/completions', {
+    const r = await fetch(`${LAMBDA_URL}/proxy/openai`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ model, messages, max_tokens: 200 })
     });
     const d = await r.json();
@@ -892,9 +892,9 @@ async function callCompanionLLM(sysPrompt, history, userMsg) {
   }
 
   if (provider === 'grok') {
-    const r = await fetch('https://api.x.ai/v1/chat/completions', {
+    const r = await fetch(`${LAMBDA_URL}/proxy/grok`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ model, messages, max_tokens: 200 })
     });
     const d = await r.json();
@@ -908,7 +908,7 @@ async function callCompanionLLM(sysPrompt, history, userMsg) {
       parts: [{ text: m.content }]
     }));
     const systemInstruction = messages.find(m => m.role === 'system')?.content || '';
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
+    const r = await fetch(`${LAMBDA_URL}/proxy/gemini?model=gemini-2.0-flash`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -923,9 +923,9 @@ async function callCompanionLLM(sysPrompt, history, userMsg) {
   }
 
   if (provider === 'openrouter') {
-    const r = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const r = await fetch(`${LAMBDA_URL}/proxy/openai`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ model, messages, max_tokens: 200 })
     });
     const d = await r.json();
@@ -1183,9 +1183,9 @@ async function runJudge() {
     else {
       log('running GPT-4o judge...');
       try {
-        const r = await fetch('https://api.openai.com/v1/chat/completions', {
+        const r = await fetch(`${LAMBDA_URL}/proxy/openai`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             model: 'gpt-4o',
             messages: [{ role: 'user', content: fullPrompt }],
@@ -1209,7 +1209,7 @@ async function runJudge() {
     else {
       log('running Gemini judge...');
       try {
-        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${key}`, {
+        const r = await fetch(`${LAMBDA_URL}/proxy/gemini?model=gemini-3.5-flash`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
