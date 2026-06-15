@@ -3,7 +3,7 @@ frontend:
   phases:
     build:
       commands:
-       - echo "const CONFIG = { LAMBDA_URL: \"${LAMBDA_URL}\" };" > config.js
+       - 'echo "const CONFIG = { LAMBDA_URL: \"${LAMBDA_URL}\" };" > config.js'
   artifacts:
     baseDirectory: /
     files:
