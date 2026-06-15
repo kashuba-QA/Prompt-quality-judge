@@ -29,3 +29,13 @@ https://github.com/kashuba-QA/Prompt-quality-judge.git
 | Role | Email | Password |
 |---|---|---|
 | LLM Judge | judgetest@net.com | 12345678Qq |
+
+## Key features in index.html
+
+| Feature | Description |
+|---|---|
+| Feature Flags panel | Load/save user feature flags (bool grid + dropdowns) via Lambda `/api/UserFeatures` |
+| Stop Dialog | Button to interrupt an ongoing dialog run (`dialogStopped` flag) |
+| Judge panel | Run GPT/Claude judge per message; results stored in `judgeResults` map |
+| Render Dialog | Displays collected dialog messages with per-message judge results |
+| Lambda proxy | All API calls (Admin, LLM, UserFeatures) routed through `LAMBDA_URL` from `config.js` |
