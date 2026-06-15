@@ -480,11 +480,11 @@
     <div class="row">
       <div class="field">
         <label>Email</label>
-        <input id="authEmail" value="judgetest@net.com" type="email"/>
+        <input id="authEmail" type="email" placeholder="default"/>
       </div>
       <div class="field">
         <label>Password</label>
-        <input id="authPassword" value="12345678Qq" type="password"/>
+        <input id="authPassword" type="password" placeholder="default"/>
       </div>
     </div>
     <button class="btn btn-secondary" onclick="doLogin()">Connect →</button>
@@ -870,7 +870,7 @@ async function doLogin() {
   try {
     const email = document.getElementById('authEmail').value.trim();
     const pass = document.getElementById('authPassword').value.trim();
-    const r = await fetch(`${base}/api/Authenticate/login`, {
+    const r = await fetch(`${CONFIG.LAMBDA_URL}/proxy/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password: pass })

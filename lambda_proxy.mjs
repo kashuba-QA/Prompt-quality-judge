@@ -131,6 +131,27 @@ export const handler = async (event) => {
       };
     }
 
+    // ── User login proxy ──────────────────────────────────────────────
+    if (path === '/proxy/login') {
+      const reqBody = bodyStr ? JSON.parse(bodyStr) : {};
+      const email    = reqBody.email    || process.env.TEST_USER_EMAIL;
+      const password = reqBody.password || process.env.TEST_USER_PASSWORD;
+      const loginBody = JSON.stringify({ email, password });
+      const result = await fetchJson(`${API_BASE}/api/Authenticate/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(loginBody)
+        },
+        body: loginBody
+      });
+      return {
+        statusCode: result.status,
+        headers: CORS_HEADERS,
+        body: typeof result.body === 'string' ? result.body : JSON.stringify(result.body)
+      };
+    }
+
     // ── Admin API proxy ───────────────────────────────────────────────
     const adminToken = await getAdminToken();
     const targetUrl = `${API_BASE}${path}${queryString}`;
