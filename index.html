@@ -480,11 +480,11 @@
     <div class="row">
       <div class="field">
         <label>Email</label>
-        <input id="authEmail" type="email" placeholder="default"/>
+        <input id="authEmail" value="judgetest@net.com" type="email"/>
       </div>
       <div class="field">
         <label>Password</label>
-        <input id="authPassword" type="password" placeholder="default"/>
+        <input id="authPassword" value="12345678Qq" type="password"/>
       </div>
     </div>
     <button class="btn btn-secondary" onclick="doLogin()">Connect →</button>
@@ -870,7 +870,7 @@ async function doLogin() {
   try {
     const email = document.getElementById('authEmail').value.trim();
     const pass = document.getElementById('authPassword').value.trim();
-    const r = await fetch(`${CONFIG.LAMBDA_URL}/proxy/login`, {
+    const r = await fetch(`${base}/api/Authenticate/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password: pass })
@@ -1016,8 +1016,6 @@ function updateCompanionProvider() {
 async function callCompanionLLM(sysPrompt, history, userMsg) {
   const provider = document.getElementById('companionProvider').value;
   const model = document.getElementById('companionModel').value;
-  const key = document.getElementById('companionKey').value.trim();
-  if (!key) throw new Error('companion API key missing');
 
   const messages = [
     { role: 'system', content: sysPrompt },
@@ -1127,7 +1125,6 @@ function stopDialog() {
 
 async function runDialog() {
   if (!accessToken) { log('login first', 'err'); return; }
-  if (!document.getElementById('companionKey').value.trim()) { log('companion API key missing', 'err'); return; }
   const chatId = document.getElementById('chatId').value.trim();
   if (!chatId) { log('chat_id missing', 'err'); return; }
 
