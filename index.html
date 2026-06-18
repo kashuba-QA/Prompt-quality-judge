@@ -1254,7 +1254,8 @@ async function deleteChat() {
   if (!accessToken) { log('login first', 'err'); return; }
   const chatId = document.getElementById('chatId').value.trim();
   if (!chatId) { log('chat_id missing', 'err'); return; }
-  const hubUrl = 'https://get-honey.today/chatHub';
+  const personModelId = document.getElementById('personModelId').value.trim();
+  const hubUrl = `https://get-honey.today/chatHub?isMobile=true&chatCount=1&personModelId=${personModelId}`;
 
   log('deleting chat and waiting for new one...');
   try {
