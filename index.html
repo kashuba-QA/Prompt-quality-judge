@@ -1289,6 +1289,12 @@ async function deleteChat() {
           }
           log(`new chat_id: ${newChatId.slice(0,8)}... ✓`, 'ok');
           connection.stop();
+          // Reset main chat connection to force fresh reconnect on next Run Dialog
+          if (chatConnection) {
+            chatConnection.stop().catch(() => {});
+            chatConnection = null;
+            log('chat connection reset ✓', 'ok');
+          }
         }
       } catch(e) {
         log(`parse PersonalChatResponse error: ${e.message}`, 'err');
