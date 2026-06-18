@@ -39,3 +39,18 @@ https://github.com/kashuba-QA/Prompt-quality-judge.git
 | Judge panel | Run GPT/Claude judge per message; results stored in `judgeResults` map |
 | Render Dialog | Displays collected dialog messages with per-message judge results |
 | Lambda proxy | All API calls (Admin, LLM, UserFeatures) routed through `LAMBDA_URL` from `config.js` |
+
+
+
+Для локального запуска в PyCharm:
+Открой терминал в PyCharm (внизу)Перейди в папку проекта если не там:
+
+cd ~/PycharmProjects/Prompt\ Quality\ Judge
+
+Запусти локальный сервер:
+python3 -m http.server 8080
+Открой Chrome без CORS:
+open -na "Google Chrome" --args --disable-web-security --user-data-dir="/tmp/chrome-no-cors"
+В этом Chrome открой http://localhost:8080
+
+Остановить сервер — Ctrl+C в терминале.
